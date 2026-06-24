@@ -21,10 +21,12 @@ HOW TO RUN:
 # tensorflow -> the neural network
 # numpy      -> number crunching
 # matplotlib -> showing images / results
+import matplotlib
+matplotlib.use("macosx")   # native Mac windows — swap for "TkAgg" if this errors
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
-
+import kagglehub
 
 # ---------------------------------------------------------------
 # 2) LOAD THE DATA
@@ -39,6 +41,25 @@ fashion_mnist = tf.keras.datasets.fashion_mnist
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
+
+# Download latest version
+path = kagglehub.dataset_download("agrigorev/clothing-dataset-full")
+
+print("Path to dataset files:", path)
+
+# ---------------------------------------------------------------
+# 3) SHOW SAMPLE TRAINING IMAGES
+# ---------------------------------------------------------------
+plt.figure(figsize=(10, 10))
+for i in range(25):
+    plt.subplot(5, 5, i + 1)
+    plt.imshow(train_images[i], cmap='gray')
+    plt.title(class_names[train_labels[i]], fontsize=9)
+    plt.axis('off')
+plt.suptitle("Sample training images", fontsize=13)
+plt.tight_layout()
+plt.show()
+plt.savefig("sample_training_images.png")
 
 # ---------------------------------------------------------------
 # 3) PREPARE THE DATA
